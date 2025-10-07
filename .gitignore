@@ -18,7 +18,7 @@ clean_env/
 # Environment / secrets
 .env
 *.env
-API_KEY
+API_KEY.txt
 alpha_vantage_key.txt
 
 # Jupyter notebook checkpoints
