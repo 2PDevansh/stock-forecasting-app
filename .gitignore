@@ -1,0 +1,61 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+*.pot
+*.pyc
+*.sqlite3
+*.db
+
+# Virtual environment
+venv/
+clean_env/
+
+# Environment / secrets
+.env
+*.env
+API_KEY
+alpha_vantage_key.txt
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# =========================
+# Backend generated data
+# =========================
+backend/__pycache__/
+backend/metrics.json
+models/
+scaled_data/
+scalers/
+static/
+templates/__pycache__/
+
+# =========================
+# React frontend
+# =========================
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.env
+
+# =========================
+# OS / Editor / Misc
+# =========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.bak
+*.tmp
+*.swp
+
+# =========================
+# Experiments / notebooks
+# =========================
+experiments/
+yfinance/

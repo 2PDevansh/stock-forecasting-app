@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Forecast App</title>
+</head>
+<body>
+    <h2>Stock Price Forecasting</h2>
+    <form action="/predict" method="post">
+        <label for="country">Select Country/Market:</label>
+        <select name="country" id="country" required>
+            <option value="NSE">India (NSE-Reliance)</option>
+            <option value="JP">Japan (Toyota)</option>
+            <option value="HK">Hong Kong(Tencent)</option>
+        </select>
+        <br><br>
+        <label for="days">Forecast Horizon:</label>
+        <select name="days" id="days" required>
+            <option value="1">Next Day Forecast</option>
+            <option value="7">Next 7 Days</option>
+            <option value="30">Next 30 Days</option>
+            <option value="90">Next 90 Days</option>
+        </select>  
+        <br><br>
+        <input type="submit" value="Predict">
+    </form>
+    {% if prediction %}
+        <h3>Prediction Result:</h3>
+        <p>{{ prediction }}</p>
+    {% endif %}
+    {% if ci_upper and ci_lower %}
+        <h3>Confidence Intervals:</h3>
+        <p>Upper Bound: {{ ci_upper }}</p>
+        <p>Lower Bound: {{ ci_lower }}</p>
+    {% endif %}
+    {% if plot_path %}
+    <h3>Forecast Plot</h3>
+    <img src="{{ url_for('static', filename=plot_path) }}" alt="Forecast Plot" style="max-width:100%; height:auto;">
+{% endif %}
+
+
+</body>
+</html>

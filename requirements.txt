@@ -1,0 +1,12 @@
+numpy
+pandas
+yfinance
+alpha_vantage
+matplotlib==3.9.2
+matplotlib.inline
+scikit-learn
+keras
+tensorflow
+LSTM
+GRU
+flask
