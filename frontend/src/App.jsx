@@ -44,7 +44,7 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+    <div style={{ padding: "20px", fontFamily: "Times New Roman" }}>
       <h2> Stock Forecast Dashboard</h2>
 
       <div>
@@ -71,36 +71,79 @@ function App() {
 
       <div style={{ marginTop: "15px" }}>
         <label> Days to Forecast: </label>
-        <input type="number" value={days} min="1" max="30" onChange={(e) => setDays(e.target.value)} />
+        <input type="number" value={days} min="1" max="101" onChange={(e) => setDays(e.target.value)} />
       </div>
 
       <button onClick={handlePredict} style={{ marginTop: "20px", padding: "10px 20px" }}>
         {loading ? "Predicting..." : "Predict"}
       </button>
 
-      {result && (
-        <div style={{ marginTop: "30px" }}>
-          <h3> Results for {result.company}</h3>
-          <p> Low Likely: <b>{result.low_likely.toFixed(2)}</b></p>
-          <p> High Likely: <b>{result.high_likely.toFixed(2)}</b></p>
+    {result && (
+  <div style={{ marginTop: "30px" }}>
+    <h3>Results for {result.company}</h3>
+    <p>Low Likely: <b>{result.low_likely.toFixed(2)}</b></p>
+    <p>High Likely: <b>{result.high_likely.toFixed(2)}</b></p>
 
-          <div style={{ width: "600px", height: "300px", marginTop: "20px" }}>
-            <Line
-              data={{
-                labels: Array.from({ length: result.forecast.length }, (_, i) => `Day ${i + 1}`),
-                datasets: [
-                  {
-                    label: "Forecast Price",
-                    data: result.forecast,
-                    borderColor: "blue",
-                    backgroundColor: "lightblue"
-                  }
-                ]
-              }}
-            />
-          </div>
+    {/* Forecast Chart */}
+    <div style={{ width: "600px", height: "300px", marginTop: "20px" }}>
+      <Line
+        data={{
+          labels: Array.from({ length: result.forecast.length }, (_, i) => `Day ${i + 1}`),
+          datasets: [
+            {
+              label: "Forecast Price",
+              data: result.forecast,
+              borderColor: "red",
+              backgroundColor: "yellow",
+              tension: 0.3,
+            },
+          ],
+        }}
+        options={{
+          responsive: true,
+          plugins: { legend: { display: true, position: "top" } },
+        }}
+      />
+    </div>
+
+    {/* Actual vs Predicted Plot */}
+    {result.plot_url && (
+      <div style={{ marginTop: "30px", textAlign: "center" }}>
+        <h4>Actual vs Predicted Stock Prices</h4>
+        <img
+          src={result.plot_url}
+          alt="Actual vs Predicted Plot"
+          style={{
+            width: "80%",
+            maxWidth: "700px",
+            borderRadius: "12px",
+            marginTop: "10px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+          }}
+        />
+        <div style={{ marginTop: "10px" }}>
+          <a
+  href={result.plot_url}
+  download={`${result.company}_plot.png`}
+  style={{
+    display: "inline-block",
+    marginTop: "10px",
+    padding: "8px 16px",
+    background: "#ff00d9ff",
+    color: "brown",
+    borderRadius: "6px",
+    textDecoration: "none",
+    fontWeight: "bold",
+  }}
+>
+  📊 Download Plot
+</a>
+
         </div>
-      )}
+      </div>
+    )}
+  </div>
+  )}
     </div>
   );
 }

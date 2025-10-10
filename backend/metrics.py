@@ -22,6 +22,7 @@ models = {
     "Tencent": os.path.join(BASE_DIR, "models/tencent_stock_price_model.h5"),
     "JD.com Inc": os.path.join(BASE_DIR, "models/jdhk_model.h5"),
     "Toyota": os.path.join(BASE_DIR, "models/toyota_stock_price_model.h5"),
+
 }
 
 scalers = {

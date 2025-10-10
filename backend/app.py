@@ -2,8 +2,11 @@ import json
 import pickle
 import numpy as np
 import tensorflow as tf
+import matplotlib.pyplot as plt
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import os
+from flask import send_from_directory
 
 # ------------------------
 # Flask app
@@ -27,6 +30,7 @@ models = {
     "Tencent": "backend/models/tencent_stock_price_model.h5",
     "Toyota": "backend/models/toyota_stock_price_model.h5",
     "JD.com Inc": "backend/models/jdhk_model.h5",
+
 }
 
 scalers = {
@@ -42,6 +46,7 @@ scalers = {
     "Tencent": "backend/scalers/tencent_scaler.pkl",
     "Toyota": "backend/scalers/toyota_scaler.pkl",
     "JD.com Inc": "backend/scalers/jdhk_scaler.pkl",
+  
 }
 
 datasets = {
@@ -57,6 +62,7 @@ datasets = {
     "Tencent": "backend/scaled_data/tencent_scaled_data.pkl",
     "Toyota": "backend/scaled_data/toyota_scaled_data.pkl",
     "JD.com Inc": "backend/scaled_data/jdhk_scaled_data.pkl",
+
 }
 
 
@@ -99,27 +105,48 @@ def predict():
 
         # Prepare input sequence
         seq_length = 60
+        X, y = [], []
+        for i in range(seq_length, len(data_scaled)):
+            X.append(data_scaled[i - seq_length:i])
+            y.append(data_scaled[i, 0])
+        X, y = np.array(X), np.array(y)
+
+        preds = model.predict(X, verbose=0)
+
+        # Rescale predictions
+        preds_rescaled = scaler.inverse_transform(
+            np.concatenate((preds, np.zeros((preds.shape[0], data_scaled.shape[1] - 1))), axis=1)
+        )[:, 0]
+        y_rescaled = scaler.inverse_transform(
+            np.concatenate((y.reshape(-1, 1), np.zeros((y.shape[0], data_scaled.shape[1] - 1))), axis=1)
+        )[:, 0]
+
+        # Plot Actual vs Predicted
+        plt.figure(figsize=(10, 6))
+        plt.plot(y_rescaled[-100:], label="Actual Prices", linewidth=2)
+        plt.plot(preds_rescaled[-100:], label="Predicted Prices", linestyle="--", linewidth=2)
+        plt.title(f"Actual vs Predicted Stock Prices ({company})")
+        plt.xlabel("Days")
+        plt.ylabel("Stock Price")
+        plt.legend()
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f"backend/plots/{company}_actual_vs_predicted.png")  # Save instead of show
+        plt.close()
+
+        # Forecast next days
         last_seq = data_scaled[-seq_length:]
-        X_input = np.array(last_seq).reshape(1, seq_length, -1)
-
+        current_input = np.array(last_seq).reshape(1, seq_length, -1)
         forecast = []
-        current_input = X_input.copy()
-
         for _ in range(days):
             pred = model.predict(current_input, verbose=0)
             forecast.append(pred[0][0])
-
-            # slide window: drop first row, add new pred
-            new_row = np.concatenate(
-                (pred, np.zeros((1, data_scaled.shape[1] - 1))), axis=1
-            )
+            new_row = np.concatenate((pred, np.zeros((1, data_scaled.shape[1] - 1))), axis=1)
             new_input = np.vstack([current_input[0][1:], new_row])
             current_input = new_input.reshape(1, seq_length, -1)
 
-        # Convert forecast into original scale
-        forecast = np.array(forecast).reshape(-1, 1)
         forecast_padded = np.concatenate(
-            (forecast, np.zeros((forecast.shape[0], data_scaled.shape[1] - 1))),
+            (np.array(forecast).reshape(-1, 1), np.zeros((len(forecast), data_scaled.shape[1] - 1))),
             axis=1
         )
         forecast_rescaled = scaler.inverse_transform(forecast_padded)[:, 0]
@@ -128,13 +155,21 @@ def predict():
             "company": company,
             "low_likely": float(min(forecast_rescaled)),
             "high_likely": float(max(forecast_rescaled)),
-            "forecast": forecast_rescaled.tolist()
+            "forecast": forecast_rescaled.tolist(),
+            "plot_url": f"http://127.0.0.1:5000/plots/{company}_actual_vs_predicted.png"
         }
+
         return jsonify(result)
 
     except Exception as e:
         return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
 
+
+
+@app.route("/plots/<filename>")
+def get_plot(filename):
+    plot_dir = os.path.join(os.getcwd(), "backend", "plots")
+    return send_from_directory(plot_dir, filename)
 
 # ------------------------
 # Run app
