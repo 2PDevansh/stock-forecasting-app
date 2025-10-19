@@ -39,6 +39,7 @@ stock-forecasting-app/
 └── README.md                # Project documentation
 ```
 **Setup Instructions**
+
 🔹 **Backend Setup**
 ```
 # Create virtual environment
