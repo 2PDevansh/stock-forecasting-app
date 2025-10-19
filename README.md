@@ -4,14 +4,38 @@
 
  🔷**Features**
 
- -Forecasts the future stock prices of leading corporations in China, Japan, and India.
+ -Forecasts the future stock prices of leading corporations in **China, Japan, and India**.
 
- -Shows Current vs. Forecasted Price Trends
+ -Shows **Current vs. Forecasted** Price Trends
 
-  -Produces short-term predictions (one to thirty days)
+  -Produces short-term **predictions (1 to 100)**
 
- -React and Chart were used to create the interactive dashboard. J.S.
+ -**React and Chart** were used to create the interactive dashboard. J.S.
 
-  -Indicates both high and low probable future prices.
+  -Indicates both **high and low probable** future prices.
 
- -Backend developed with Scikit-learn, Flask, and TensorFlow
+ -Backend developed with **Scikit-learn, Flask, and TensorFlow**
+
+ Project Structure
+ ```
+stock-forecasting-app/
+│
+├── backend/
+│   ├── models/              # Trained LSTM models (.h5)
+│   ├── scalers/             # Data scaling objects (.pkl)
+│   ├── scaled_data/         # Preprocessed data
+│   ├── plots/               # Generated stock plots
+│   ├── app.py               # Flask backend API
+│   └── metrics.json         # Model RMSE values
+│
+├── frontend/
+│   ├── src/
+│   │   ├── App.js           # React dashboard UI
+│   │   ├── components/      # UI components
+│   │   └── assets/          # Icons / images
+│   └── package.json
+│
+├── requirements.txt         # Python dependencies
+├── Procfile                 # For deployment (Render/Heroku)
+└── README.md                # Project documentation
+```
