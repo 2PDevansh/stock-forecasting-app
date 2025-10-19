@@ -16,7 +16,7 @@
 
  -Backend developed with **Scikit-learn, Flask, and TensorFlow**
 
- Project Structure
+ **Project Structure**
  ```
 stock-forecasting-app/
 │
@@ -36,6 +36,45 @@ stock-forecasting-app/
 │   └── package.json
 │
 ├── requirements.txt         # Python dependencies
-├── Procfile                 # For deployment (Render/Heroku)
 └── README.md                # Project documentation
 ```
+**Setup Instructions**
+🔹 **Backend Setup**
+```
+# Create virtual environment
+python -m venv venv
+venv\Scripts\activate  # (Windows)
+# source venv/bin/activate  # (macOS/Linux)
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run Flask app
+python backend/app.py
+```
+🔹 **Frontend Setup**
+```
+# Navigate to frontend
+cd frontend
+
+# Install dependencies
+npm install
+
+# Run React app
+npm start
+```
+| Layer         | Technologies Used                     |
+| ------------- | ------------------------------------- |
+| Frontend      | React.js, Chart.js, Axios             |
+| Backend       | Flask, TensorFlow/Keras, Scikit-Learn |
+| Data Handling | NumPy, Pandas, Pickle                 |
+| Visualization | Matplotlib                            |
+| Deployment    | Render / Heroku                       |
+
+👨‍💻 **Author**
+**Devansh Prasad**
+📧 devanshprasad798@gmail.com
+💻 GitHub: 2PDevansh
+
+**Support**
+If you appreciate this project, please ⭐ Star this repository on GitHub to show your support and help others find it!
