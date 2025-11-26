@@ -74,14 +74,10 @@ npm start
 | Visualization | Matplotlib                            |
 | Deployment    | Render / Heroku                       |
 
-👨‍💻 **Author**
 
 **Devansh Prasad**
 
-📧 devanshprasad798@gmail.com
+ devanshprasad798@gmail.com
 
-💻 GitHub: 2PDevansh
+ GitHub: 2PDevansh
 
-**Support**
-
-If you appreciate this project, please ⭐ Star this repository on GitHub to show your support and help others find it!
