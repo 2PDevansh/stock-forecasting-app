@@ -34,7 +34,8 @@ stock-forecasting-app/
 │   │   ├── components/      # UI components
 │   │   └── assets/          # Icons / images
 │   └── package.json
-│
+│----frontend_nicegui/
+       |--app.py            # NICEGUI dashboard UI
 ├── requirements.txt         # Python dependencies
 └── README.md                # Project documentation
 ```
