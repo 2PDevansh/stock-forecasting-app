@@ -105,18 +105,13 @@ npm start
 ```
 
 
- ### Tech Stack
+Tech Stack
 Layer	Technologies Used
-
-           -Frontend	React.js, Chart.js, Axios
-
-           -Backend	Flask, TensorFlow/Keras, Scikit-Learn
-
-           -Data	NumPy, Pandas, Pickle
-
-           -Visualization	Matplotlib
-
-          -Deployment	Render / Heroku
+Frontend	React.js, Chart.js, Axios
+Backend	Flask, TensorFlow/Keras, Scikit-Learn
+Data	NumPy, Pandas, Pickle
+Visualization	Matplotlib
+Deployment	Render / Heroku
 
 ### Dashboard Preview
 <img width="857" height="303" alt="image" src="https://github.com/user-attachments/assets/f2a3f5ca-24e8-4aee-b14f-e5d1568cc771" />
