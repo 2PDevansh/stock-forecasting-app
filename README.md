@@ -13,22 +13,22 @@ This project predicts future stock prices of major corporations across **China �
 
 ##  Project Highlights
 
-✨ **Full-Stack Machine Learning Application**  
-✨ **Time-Series Forecasting using LSTM Networks**  
-✨ **Interactive & Responsive Dashboard**  
-✨ **Supports Multi-Country Stock Analysis**
+- **Full-Stack Machine Learning Application**  
+- **Time-Series Forecasting using LSTM Networks**  
+- **Interactive & Responsive Dashboard**  
+- **Supports Multi-Country Stock Analysis**
 
 ---
 
 ##  Features
 
-✔️ Forecasts future stock prices of leading corporations  
-✔️ Displays **Current vs Forecasted Price Trends**  
-✔️ Produces **short-term predictions (1–100 days)**  
-✔️ Visualizes **High & Low probable future prices**  
-✔️ Interactive charts using **React + Chart.js**  
-✔️ Backend powered by **Flask, TensorFlow & Scikit-learn**  
-✔️ Model evaluation using **RMSE metrics**
+- Forecasts future stock prices of leading corporations  
+- Displays **Current vs Forecasted Price Trends**  
+- Produces **short-term predictions (1–100 days)**  
+- Visualizes **High & Low probable future prices**  
+- Interactive charts using **React + Chart.js**  
+- Backend powered by **Flask, TensorFlow & Scikit-learn**  
+- Model evaluation using **RMSE metrics**
 
 ---
 
@@ -45,7 +45,7 @@ This project predicts future stock prices of major corporations across **China �
 
 ---
 
-## 🗂️ Project Structure
+##  Project Structure
 ```
 stock-forecasting-app/
 │
@@ -106,12 +106,12 @@ npm start
 
 
  ### Tech Stack
-Layer	Technologies Used
-Frontend	React.js, Chart.js, Axios
-Backend	Flask, TensorFlow/Keras, Scikit-Learn
-Data	NumPy, Pandas, Pickle
-Visualization	Matplotlib
-Deployment	Render / Heroku
+- Layer	Technologies Used
+ -Frontend	React.js, Chart.js, Axios
+ -Backend	Flask, TensorFlow/Keras, Scikit-Learn
+ -Data	NumPy, Pandas, Pickle
+ -Visualization	Matplotlib
+ -Deployment	Render / Heroku
 
 ### Dashboard Preview
 <img width="857" height="303" alt="image" src="https://github.com/user-attachments/assets/f2a3f5ca-24e8-4aee-b14f-e5d1568cc771" />
