@@ -1,6 +1,6 @@
 #  Stock Forecasting Dashboard
 
-![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![Flask](https://img.shields.io/badge/Flask-Backend-black.svg)
 ![React](https://img.shields.io/badge/React-Frontend-blue.svg)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-DeepLearning-orange.svg)
