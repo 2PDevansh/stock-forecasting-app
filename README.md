@@ -1,4 +1,4 @@
-# 📈 Stock Forecasting Dashboard
+#  Stock Forecasting Dashboard
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![Flask](https://img.shields.io/badge/Flask-Backend-black.svg)
@@ -12,7 +12,7 @@ This project predicts future stock prices of major corporations across **China �
 
 ---
 
-## 🚀 Project Highlights
+##  Project Highlights
 
 ✨ **Full-Stack Machine Learning Application**  
 ✨ **Time-Series Forecasting using LSTM Networks**  
@@ -21,7 +21,7 @@ This project predicts future stock prices of major corporations across **China �
 
 ---
 
-## 🔥 Features
+##  Features
 
 ✔️ Forecasts future stock prices of leading corporations  
 ✔️ Displays **Current vs Forecasted Price Trends**  
@@ -33,7 +33,7 @@ This project predicts future stock prices of major corporations across **China �
 
 ---
 
-## 🧠 Machine Learning Details
+##  Machine Learning Details
 
 - Model: **LSTM (Long Short-Term Memory)**
 - Framework: **TensorFlow / Keras**
@@ -77,7 +77,7 @@ stock-forecasting-app/
 
 ---
 
-## ⚙️ Setup Instructions
+##  Setup Instructions
 
 ### 🔹 Backend Setup (Flask API)
 
