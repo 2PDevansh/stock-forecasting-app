@@ -48,10 +48,14 @@ This project predicts future stock prices of major corporations across **China �
 
 ## 🗂️ Project Structure
 
+
 stock-forecasting-app/
 │
+
 ├── backend/
+
 │ ├── models/ # Trained LSTM models (.h5)
+
 │ ├── scalers/ # Data scaling objects (.pkl)
 │ ├── scaled_data/ # Preprocessed data
 │ ├── plots/ # Generated stock plots
@@ -70,9 +74,6 @@ stock-forecasting-app/
 │
 ├── requirements.txt # Python dependencies
 └── README.md # Project documentation
-
-yaml
-Copy code
 
 ---
 
@@ -104,7 +105,10 @@ npm install
 
 # Start React app
 npm start
-🛠️ Tech Stack
+```
+
+
+ ### Tech Stack
 Layer	Technologies Used
 Frontend	React.js, Chart.js, Axios
 Backend	Flask, TensorFlow/Keras, Scikit-Learn
@@ -112,4 +116,4 @@ Data	NumPy, Pandas, Pickle
 Visualization	Matplotlib
 Deployment	Render / Heroku
 
-📊 Dashboard Preview
+### Dashboard Preview
