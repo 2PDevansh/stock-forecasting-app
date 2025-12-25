@@ -106,7 +106,6 @@ npm start
 
 
 Tech Stack
-
            Layer	Technologies Used
                 Frontend	React.js, Chart.js, Axios
                 Backend	Flask, TensorFlow/Keras, Scikit-Learn
