@@ -107,10 +107,15 @@ npm start
 
  ### Tech Stack
 Layer	Technologies Used
+
 Frontend	React.js, Chart.js, Axios
+
 Backend	Flask, TensorFlow/Keras, Scikit-Learn
+
 Data	NumPy, Pandas, Pickle
+
 Visualization	Matplotlib
+
 Deployment	Render / Heroku
 
 ### Dashboard Preview
