@@ -47,11 +47,9 @@ This project predicts future stock prices of major corporations across **China �
 ---
 
 ## 🗂️ Project Structure
-
-
+```
 stock-forecasting-app/
 │
-
 ├── backend/
 
 │ ├── models/ # Trained LSTM models (.h5)
@@ -74,14 +72,13 @@ stock-forecasting-app/
 │
 ├── requirements.txt # Python dependencies
 └── README.md # Project documentation
-
----
+```
 
 ##  Setup Instructions
 
 ### 🔹 Backend Setup (Flask API)
 
-```bash
+```
 # Create virtual environment
 python -m venv venv
 
@@ -94,9 +91,10 @@ pip install -r requirements.txt
 
 # Run Flask app
 python backend/app.py
-🔹 Frontend Setup (React Dashboard)
-bash
-Copy code
+```
+
+### 🔹 Frontend Setup (React Dashboard)
+```
 # Navigate to frontend directory
 cd frontend
 
@@ -117,3 +115,10 @@ Visualization	Matplotlib
 Deployment	Render / Heroku
 
 ### Dashboard Preview
+<img width="847" height="617" alt="Screenshot 2025-12-25 143637" src="https://github.com/user-attachments/assets/d994f031-791b-4666-bcd3-950fe42c4756" />
+<img width="1250" height="777" alt="Screenshot 2025-12-25 143725" src="https://github.com/user-attachments/assets/11d0e188-0a35-49c5-9c6c-104d5f653f95" />
+<img width="1312" height="660" alt="Screenshot 2025-12-25 143730" src="https://github.com/user-attachments/assets/3938a2eb-306f-4957-b451-e7b6d63d743e" />
+<img width="1390" height="370" alt="Screenshot 2025-12-25 143738" src="https://github.com/user-attachments/assets/56258856-50e5-49dc-bce9-55d50985a126" />
+
+
+
