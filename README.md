@@ -4,8 +4,7 @@
 ![Flask](https://img.shields.io/badge/Flask-Backend-black.svg)
 ![React](https://img.shields.io/badge/React-Frontend-blue.svg)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-DeepLearning-orange.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Status](https://img.shields.io/badge/Project-Active-success.svg)
+![Status](https://img.shields.io/badge/Project-Completed-success.svg)
 
 An **interactive full-stack stock forecasting dashboard** powered by **LSTM deep learning models**, featuring a **React-based UI** and **Flask backend API**.  
 This project predicts future stock prices of major corporations across **China 🇨🇳, Japan 🇯🇵, and India 🇮🇳**.
