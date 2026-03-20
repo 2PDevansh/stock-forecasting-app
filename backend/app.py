@@ -1,4 +1,3 @@
-import json
 import pickle
 import numpy as np
 import tensorflow as tf
@@ -10,6 +9,7 @@ import pandas as pd
 import traceback
 import logging
 
+
 # ------------------------
 # App / Logging setup
 # ------------------------
@@ -17,12 +17,14 @@ app = Flask(__name__)
 CORS(app)
 logging.basicConfig(level=logging.INFO)
 
+
 # ------------------------
 # Paths: adjust if your tree differs
 # ------------------------
 DATASET_DIR = "dataset"
 PLOTS_DIR = "plots"
 os.makedirs(PLOTS_DIR, exist_ok=True)
+
 
 # ------------------------
 # Model / Scaler / Dataset Paths
@@ -42,6 +44,7 @@ models = {
     "JD.com Inc": "models/jdhk_model.h5",
 }
 
+
 scalers = {
     "HDFC": "scalers/hdfc_scaler.pkl",
     "Reliance": "scalers/nse_scaler.pkl",
@@ -57,6 +60,7 @@ scalers = {
     "JD.com Inc": "scalers/jdhk_scaler.pkl",
 }
 
+
 datasets = {
     "HDFC": "scaled_data/hdfc_scaled_data.pkl",
     "Reliance": "scaled_data/nse_scaled_data.pkl",
@@ -71,6 +75,7 @@ datasets = {
     "Toyota": "scaled_data/toyota_scaled_data.pkl",
     "JD.com Inc": "scaled_data/jdhk_scaled_data.pkl",
 }
+
 
 # ------------------------
 # Load CSV Data (robust)
@@ -88,8 +93,10 @@ def load_csv(path):
         logging.error(f"Error loading CSV {path}:\n{traceback.format_exc()}")
         return pd.DataFrame()
 
+
 company_risk_df = load_csv(os.path.join(DATASET_DIR, "company_risk.csv"))
 country_grsi_df = load_csv(os.path.join(DATASET_DIR, "country_GRSI.csv"))
+
 
 # ------------------------
 # Helper: fuzzy match company name (exact, then contains)
@@ -109,12 +116,14 @@ def find_company_row(company_name: str):
     # no match
     return pd.DataFrame()
 
+
 # ------------------------
 # Health check
 # ------------------------
 @app.route("/", methods=["GET"])
 def home():
     return jsonify({"message": "Backend running. Use /predict and /grsi endpoints."})
+
 
 # ------------------------
 # Company risk list
@@ -127,6 +136,7 @@ def get_company_risk():
         logging.error(traceback.format_exc())
         return jsonify({"error": "Failed to return company risk data"}), 500
 
+
 # ------------------------
 # Country GRSI list
 # ------------------------
@@ -137,6 +147,7 @@ def get_country_grsi():
     except Exception:
         logging.error(traceback.format_exc())
         return jsonify({"error": "Failed to return country GRSI data"}), 500
+
 
 # ------------------------
 # GRSI lookup (company-specific or full country map)
@@ -156,6 +167,7 @@ def get_grsi():
             # return uppercase key 'GRSI' to match frontend expectation
             return jsonify({"company": row.iloc[0]["company"], "GRSI": float(score)}), 200
 
+
         # no company given -> return country-level map
         if country_grsi_df.empty:
             return jsonify({"GRSI": {}}), 200
@@ -166,15 +178,18 @@ def get_grsi():
         else:
             return jsonify({"GRSI": {}}), 200
 
+
     except Exception:
         logging.error(traceback.format_exc())
         return jsonify({"error": "Unexpected server error"}), 500
+
 
 # ------------------------
 # Safe helper: check file exists
 # ------------------------
 def file_exists(path):
     return os.path.exists(path) and os.path.isfile(path)
+
 
 # ------------------------
 # Predict endpoint
@@ -186,8 +201,10 @@ def predict():
         company = data.get("company")
         days = int(data.get("days", 5))
 
+
         if not company:
             return jsonify({"error": "Company is required"}), 400
+
 
         if company not in models:
             # tolerate case-insensitive mapping: try to find a key equal ignoring case
@@ -200,9 +217,11 @@ def predict():
         else:
             company_key = company
 
+
         model_path = models[company_key]
         scaler_path = scalers.get(company_key)
         dataset_path = datasets.get(company_key)
+
 
         # Check files exist
         missing = []
@@ -217,12 +236,14 @@ def predict():
             logging.error(msg)
             return jsonify({"error": msg}), 500
 
+
         # Load model, scaler, dataset
         try:
             model = tf.keras.models.load_model(model_path, compile=False)
         except Exception:
             logging.error(f"Failed to load model {model_path}:\n{traceback.format_exc()}")
             return jsonify({"error": f"Failed to load model for {company_key}"}), 500
+
 
         try:
             with open(scaler_path, "rb") as f:
@@ -231,6 +252,7 @@ def predict():
             logging.error(f"Failed to load scaler {scaler_path}:\n{traceback.format_exc()}")
             return jsonify({"error": f"Failed to load scaler for {company_key}"}), 500
 
+
         try:
             with open(dataset_path, "rb") as f:
                 data_scaled = pickle.load(f)
@@ -238,15 +260,18 @@ def predict():
             logging.error(f"Failed to load dataset {dataset_path}:\n{traceback.format_exc()}")
             return jsonify({"error": f"Failed to load dataset for {company_key}"}), 500
 
+
         # Ensure data_scaled is a numpy array
         data_scaled = np.array(data_scaled)
         if data_scaled.ndim == 1:
             # make it 2D with single column
             data_scaled = data_scaled.reshape(-1, 1)
 
+
         seq_length = 60
         if len(data_scaled) < seq_length + 1:
             return jsonify({"error": f"Not enough historical data for {company_key} (need > {seq_length})"}), 500
+
 
         # Build X,y
         X, y = [], []
@@ -256,25 +281,31 @@ def predict():
         X = np.array(X)
         y = np.array(y)
 
+
         # Predictions
         preds = model.predict(X, verbose=0)
 
+
         # preds might be shape (n,1) or (n,)
         preds_arr = preds.reshape(-1, 1) if preds.ndim == 1 else preds
+
 
         # Prepare for inverse_transform: pad with zeros for remaining features
         n_features = data_scaled.shape[1]
         if n_features < 1:
             return jsonify({"error": "Dataset has no features"}), 500
 
+
         pad_width_pred = np.zeros((preds_arr.shape[0], max(0, n_features - preds_arr.shape[1])))
         preds_padded = np.concatenate([preds_arr, pad_width_pred], axis=1) if n_features > preds_arr.shape[1] else preds_arr[:, :n_features]
+
 
         try:
             preds_rescaled = scaler.inverse_transform(preds_padded)[:, 0]
         except Exception:
             logging.error("Scaler inverse_transform failed:\n" + traceback.format_exc())
             return jsonify({"error": "Scaler inverse_transform failed"}), 500
+
 
         # Rescale y (actual)
         y_arr = y.reshape(-1, 1)
@@ -285,6 +316,7 @@ def predict():
         except Exception:
             logging.error("Scaler inverse_transform failed for y:\n" + traceback.format_exc())
             return jsonify({"error": "Scaler inverse_transform failed"}), 500
+
 
         # Save plot
         try:
@@ -306,6 +338,7 @@ def predict():
             logging.error("Failed to create/save plot:\n" + traceback.format_exc())
             plot_url = None
 
+
         # Forecast future days (iterative)
         last_seq = data_scaled[-seq_length:]
         current_input = last_seq.reshape(1, seq_length, -1)
@@ -319,6 +352,7 @@ def predict():
             new_input = np.vstack([current_input[0][1:], new_row])
             current_input = new_input.reshape(1, seq_length, -1)
 
+
         # inverse transform forecast
         forecast_arr = np.array(forecast).reshape(-1, 1)
         pad_fore = np.zeros((forecast_arr.shape[0], max(0, n_features - 1)))
@@ -328,6 +362,7 @@ def predict():
         except Exception:
             logging.error("Scaler inverse_transform failed for forecast:\n" + traceback.format_exc())
             return jsonify({"error": "Scaler inverse_transform failed for forecast"}), 500
+
 
         # GeoRisk lookup (company risk and country GRSI)
         company_row = find_company_row(company_key)
@@ -344,6 +379,7 @@ def predict():
                     if not country_row.empty:
                         country_grsi_value = float(country_row.iloc[0]["grsi"])
 
+
         result = {
             "company": company_key,
             "low_likely": float(min(forecast_rescaled)),
@@ -354,11 +390,14 @@ def predict():
             "country_grsi": country_grsi_value,
         }
 
+
         return jsonify(result)
+
 
     except Exception:
         logging.error("Unhandled error in /predict:\n" + traceback.format_exc())
         return jsonify({"error": "Unexpected error occurred"}), 500
+
 
 # ------------------------
 # Serve plot images
@@ -367,6 +406,7 @@ def predict():
 def get_plot(filename):
     plot_dir = os.path.join(os.getcwd(), PLOTS_DIR)
     return send_from_directory(plot_dir, filename)
+
 
 # ------------------------
 # Run app

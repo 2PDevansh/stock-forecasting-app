@@ -12,13 +12,16 @@ import {
   Legend
 } from "chart.js";
 
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
 
 const companyOptions = {
   India: ["TCS", "Reliance", "Adani", "HDFC"],
   Japan: ["Toyota", "Honda", "Sony", "Nintendo"],
   China: ["Alibaba", "Xiaomi", "JD.com Inc", "Tencent"],
 };
+
 
 function App() {
   const [country, setCountry] = useState("");
@@ -27,12 +30,15 @@ function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
+
   const [grsi, setGrsi] = useState(null);
   const [loadingGRSI, setLoadingGRSI] = useState(false);
+
 
   // ---------- STOCK PREDICTION ----------
   const handlePredict = async () => {
     if (!company) return alert("Please select a company!");
+
 
     setLoading(true);
     try {
@@ -45,9 +51,11 @@ function App() {
     setLoading(false);
   };
 
+
   // ---------- GRSI FETCH ----------
   const fetchGRSI = async () => {
     if (!company) return alert("Please select a company first!");
+
 
     setLoadingGRSI(true);
     try {
@@ -60,6 +68,7 @@ function App() {
     setLoadingGRSI(false);
   };
 
+
   // ---------- RISK BADGE COLOR ----------
   const getRiskColor = (value) => {
     if (value < 30) return "green";
@@ -67,9 +76,11 @@ function App() {
     return "red";
   };
 
+
   return (
     <div style={styles.container}>
       <h2 style={styles.header}>Stock Forecast Dashboard + GeoRisk Index</h2>
+
 
       {/* Country Dropdown */}
       <div style={styles.inputGroup}>
@@ -85,6 +96,7 @@ function App() {
           ))}
         </select>
       </div>
+
 
       {/* Company Dropdown */}
       {country && (
@@ -103,6 +115,7 @@ function App() {
         </div>
       )}
 
+
       {/* Days Input */}
       <div style={styles.inputGroup}>
         <label style={styles.label}>Days to Forecast:</label>
@@ -116,15 +129,18 @@ function App() {
         />
       </div>
 
+
       {/* Predict Button */}
       <button style={styles.button} onClick={handlePredict} disabled={loading}>
         {loading ? "Predicting..." : "Predict"}
       </button>
 
+
       {/* GRSI Button */}
       <button style={styles.buttonSecondary} onClick={fetchGRSI} disabled={loadingGRSI}>
         {loadingGRSI ? "Loading GRSI..." : "Show GeoRisk Index"}
       </button>
+
 
       {/* Forecast Results */}
       {result && (
@@ -132,6 +148,7 @@ function App() {
           <h3>Results for <b>{result.company}</b></h3>
           <p>Low Likely: <b>{result.low_likely.toFixed(2)}</b></p>
           <p>High Likely: <b>{result.high_likely.toFixed(2)}</b></p>
+
 
           <div style={styles.chartContainer}>
             <Line
@@ -151,6 +168,7 @@ function App() {
             />
           </div>
 
+
           {result.plot_url && (
             <>
               <h4>Actual vs Predicted Stock Prices</h4>
@@ -163,10 +181,12 @@ function App() {
         </div>
       )}
 
+
       {/* GRSI Display */}
       {grsi?.GRSI && (
         <div style={styles.grsiBox}>
           <h3>GeoRisk Score for <b>{grsi.company}</b></h3>
+
 
           <p style={{
             fontSize: "28px",
@@ -176,6 +196,7 @@ function App() {
             {grsi.GRSI.toFixed(2)}
           </p>
 
+
           <p style={{ fontSize: "14px" }}>
             Higher score → Higher geopolitical tension & market volatility.
           </p>
@@ -184,6 +205,7 @@ function App() {
     </div>
   );
 }
+
 
 // ---------- STYLES ----------
 const styles = {
@@ -216,5 +238,6 @@ const styles = {
     background: "#E8D9B5", color: "#532E1C", borderRadius: "6px", textDecoration: "none"
   }
 };
+
 
 export default App;
