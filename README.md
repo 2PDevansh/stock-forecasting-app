@@ -119,7 +119,7 @@ Tech Stack
                 
   Deployment	  Render 
 
-### Dashboard Preview()
+### Dashboard Preview
 
 <img width="884" height="418" alt="image" src="https://github.com/user-attachments/assets/9a7c6236-beac-4ee9-925f-0f01d8f450bf" />
 
